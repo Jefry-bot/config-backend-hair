@@ -1,0 +1,22 @@
+eureka:
+  client:
+    enable: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-security
+          uri: lb://service-security
+          predicates:
+            - Path=/api/**
+        - id: service-management
+          uri: lb://service-management
+          predicates:
+            - Path=/api/**
